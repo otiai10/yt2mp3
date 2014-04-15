@@ -23,8 +23,12 @@ git submodule update --init
 ./youtube-dl/youtube-dl --version
 ```
 # Run the tests
-
-coming soon
+```sh
+go get github.com/r7kamura/gospel
+```
+```sh
+go test ./tests/...
+```
 
 # Usage
 
