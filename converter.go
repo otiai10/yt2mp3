@@ -1,14 +1,43 @@
 package yt2mp3
 
-import "fmt"
-
 type Converter struct {
+	DownloadClient Client
+}
+type MyError struct {
+	message string
 }
 
-func Init() *Converter {
-    return &Converter{}
+func (e MyError) Error() string {
+	return e.message
+}
+func NewError(message string) error {
+	return MyError{
+		message,
+	}
 }
 
-func (c *Converter)Greet() string {
-    return fmt.Sprintf("Hi, this is %s.", "yt2mp3.Converter")
+func Init(args ...interface{}) (converter *Converter, err error) {
+	if len(args) > 0 {
+		if _, ok := interface{}(args[0]).(DownloadClient); ok {
+			converter = &Converter{
+				args[0],
+			}
+		} else {
+			err = NewError(
+				"Invalid argument for Init: type `DownloadClient` required",
+			)
+		}
+		return
+	}
+	err = CheckEnv()
+	if err == nil {
+		converter = &Converter{
+			NewDownloadClient(),
+		}
+	}
+	return
+}
+
+func CheckEnv() (err error) {
+	return err
 }
