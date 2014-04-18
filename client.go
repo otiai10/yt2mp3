@@ -13,8 +13,8 @@ import "runtime"
  */
 var (
 	// TODO : とりあえず定数
-	COMMAND_PATH       string = "/youtube-dl/youtube-dl"
-	DEFAULT_URL_PREFIX string = "http://www.youtube.com/watch?v=%s"
+	command_path       string = "/youtube-dl/youtube-dl"
+	default_url_prefix string = "http://www.youtube.com/watch?v=%s"
 )
 
 type Client interface {
@@ -30,7 +30,7 @@ type DownloadOptions struct {
 
 func NewDownloadClient() DownloadClient {
 	_, file, _, _ := runtime.Caller(0)
-	commandBase := path.Dir(file) + COMMAND_PATH
+	commandBase := path.Dir(file) + command_path
 	return DownloadClient{
 		commandBase,
 		DownloadOptions{},
@@ -39,7 +39,7 @@ func NewDownloadClient() DownloadClient {
 }
 
 func (client DownloadClient) Execute(vid string) (fname string, err error) {
-	url := fmt.Sprintf(DEFAULT_URL_PREFIX, vid)
+	url := fmt.Sprintf(default_url_prefix, vid)
 	client.command = exec.Command(client.CommandBase, url, "-x", "--audio-format", "mp3")
 	output := client.executeCommand()
 	fname = client.extraceFileName(output)
