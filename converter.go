@@ -1,7 +1,5 @@
 package yt2mp3
 
-import "fmt"
-
 type Converter struct {
 	Client Client
 }
@@ -46,8 +44,7 @@ func CheckEnv() (err error) {
 
 // FIXME : とりあえずfilepath stringで
 func (c Converter) Vid2mp3(vid string) (fpath string, err error) {
-    // Invalid Vid Format とかがあり得るよね
-    fpath, err = c.Client.Execute(vid)
-    fmt.Println("In Vid2mp3\n", fpath, err)
-    return
+	// Invalid Vid Format とかがあり得るよね
+	fpath, err = c.Client.Execute(vid)
+	return
 }
