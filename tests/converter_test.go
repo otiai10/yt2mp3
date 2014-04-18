@@ -16,6 +16,7 @@ func TestConverter(t *testing.T) {
 			converter, _ := yt2mp3.Init()
 			mp3, err := converter.Vid2mp3(vid)
 			fmt.Println(mp3, err)
+			// TODO: more assertions
 		})
 	})
 }

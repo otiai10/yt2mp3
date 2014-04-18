@@ -6,17 +6,15 @@ import "regexp"
 import "path"
 import "runtime"
 
-/**
- * Client to handle `youtube-dl` command
- * @see https://github.com/rg3/youtube-dl/blob/master/README.md
- * @example ./youtube-dl {YouTubeURL} [-x|--extract-audio] [--audio-format mp3]
- */
 var (
-	// TODO : とりあえず定数
+	// TODO : optionalize
 	command_path       string = "/youtube-dl/youtube-dl"
 	default_url_prefix string = "http://www.youtube.com/watch?v=%s"
 )
 
+// Client to handle `youtube-dl` command
+// @see https://github.com/rg3/youtube-dl/blob/master/README.md
+// @example ./youtube-dl {YouTubeURL} [-x|--extract-audio] [--audio-format mp3]
 type Client interface {
 	Execute(vid string) (fpath string, err error)
 }

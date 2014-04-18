@@ -42,9 +42,8 @@ func CheckEnv() (err error) {
 	return err
 }
 
-// FIXME : とりあえずfilepath stringで
 func (c Converter) Vid2mp3(vid string) (fpath string, err error) {
-	// Invalid Vid Format とかがあり得るよね
+	// TODO: Invalid Vid Format Error (for example)
 	fpath, err = c.Client.Execute(vid)
 	return
 }
