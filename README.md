@@ -1,7 +1,27 @@
 # yt2mp3
 A go package extracting mp3 file from YouTube URL.
 
+# Usage
+### command line
+```sh
+yt2mp3 NCdDvXg6olE
+# The mp3 of http://www.youtube.com/watch?v=NCdDvXg6olE will be downloaded
+```
+### in code
+```go
+package main
+
+import "yt2mp3"
+
+func main() {
+    converter, _ := yt2mp3.Init()
+    _, _ := converter.Vid2mp3("5blm22DeeHY")
+    // The mp3 of http://www.youtube.com/watch?v=5blm22DeeHY will be downloaded
+}
+```
+
 # Setup
+Install basic library
 ```sh
 apt-get install ffmpeg
 ffmpeg -version
@@ -18,9 +38,19 @@ ffmpeg -version
 # libswscale    2.  1. 0 /  2.  1. 0
 # libpostproc  52.  0. 0 / 52.  0. 0
 ```
+Clone repository
 ```sh
+go get github.com/otiai10/yt2mp3
+```
+Enable youtube-dl command
+```sh
+cd $GOPATH/src/github.com/otiai10/yt2mp3
 git submodule update --init
 ./youtube-dl/youtube-dl --version
+```
+Install go command bin (to use `yt2mp3` command)
+```sh
+go install github.com/otiai10/yt2mp3/yt2mp3
 ```
 # Run the tests
 ```sh
@@ -29,7 +59,3 @@ go get github.com/r7kamura/gospel
 ```sh
 go test ./tests/...
 ```
-
-# Usage
-
-coming soon
