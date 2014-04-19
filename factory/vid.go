@@ -2,10 +2,25 @@ package factory
 
 import "regexp"
 import "errors"
+import "fmt"
 
 var (
 	url_youtube_com = "www.youtube.com"
 	url_youtu_be    = "youtu.be"
+    pattern_url     = fmt.Sprintf(
+        `^(?P<protocol>https?)://(?P<domain>%s|%s)/(?P<query>.+)`,
+        url_youtube_com,
+        url_youtu_be,
+    )
+    pattern_vid                = `[a-zA-Z0-9_-]{11}`
+    pattern_vid_on_youtube_com = fmt.Sprintf(
+        `^watch?.*v=(?P<vid>%s).*`,
+        pattern_vid,
+    )
+    pattern_vid_on_youtu_be    = fmt.Sprintf(
+        `^(?P<vid>%s).*`,
+        pattern_vid,
+    )
 	e_url_too_short = "Too short URL format."
 )
 
@@ -25,12 +40,7 @@ func (re *regexx) SubmatchMap(str string) (mapped map[string]string) {
 }
 
 func Url2vid(url string) (vid string, err error) {
-	exp := regexx{
-		regexp.MustCompile(
-			// TODO: consturct dynamically
-			`^(?P<protocol>https?)://(?P<domain>www.youtube.com|youtu.be)/(?P<query>.+)`,
-		),
-	}
+	exp := regexx{regexp.MustCompile(pattern_url)}
 	matches := exp.SubmatchMap(url)
 	if len(matches) < 4 {
 		err = errors.New(e_url_too_short)
@@ -48,11 +58,7 @@ func Url2vid(url string) (vid string, err error) {
 }
 
 func vidFromYoutubeCom(query string) (vid string, err error) {
-	exp := regexx{
-		regexp.MustCompile(
-			`^watch?.*v=(?P<vid>[a-zA-Z0-9_-]{11}).*`,
-		),
-	}
+	exp := regexx{regexp.MustCompile(pattern_vid_on_youtube_com)}
 	// TODO: DRY
 	matches := exp.SubmatchMap(query)
 	if matches["vid"] != "" {
@@ -64,11 +70,7 @@ func vidFromYoutubeCom(query string) (vid string, err error) {
 }
 
 func vidFromYoutuBe(query string) (vid string, err error) {
-	exp := regexx{
-		regexp.MustCompile(
-			`^(?P<vid>[a-zA-Z0-9_-]{11}).*`,
-		),
-	}
+	exp := regexx{regexp.MustCompile(pattern_vid_on_youtu_be)}
 	// TODO: DRY
 	matches := exp.SubmatchMap(query)
 	if matches["vid"] != "" {
