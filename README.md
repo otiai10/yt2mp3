@@ -18,8 +18,13 @@ import "fmt"
 
 func main() {
     converter, _ := yt2mp3.Init()
+
     fname, _ := converter.Vid2mp3("5blm22DeeHY")
     // The mp3 of http://www.youtube.com/watch?v=5blm22DeeHY will be downloaded
+    fmt.Println(fnam)
+
+    fname, _ = converter.Url2mp3("http://www.youtube.com/watch?v=fNDrLfEfRiE")
+    // The mp3 of http://www.youtube.com/watch?v=fNDrLfEfRiE will be downloaded
     fmt.Println(fnam)
 }
 ```
