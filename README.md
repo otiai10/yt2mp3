@@ -2,21 +2,25 @@
 A go package extracting mp3 file from YouTube URL.
 
 # Usage
-### command line
+## in command line
 ```sh
-yt2mp3 NCdDvXg6olE
+% yt2mp3 NCdDvXg6olE
 # The mp3 of http://www.youtube.com/watch?v=NCdDvXg6olE will be downloaded
+% yt2mp3 -url http://www.youtube.com/watch?v=fNDrLfEfRiE
+# The mp3 of http://www.youtube.com/watch?v=fNDrLfEfRiE will be downloaded
 ```
-### in code
+## in go code
 ```go
 package main
 
 import "yt2mp3"
+import "fmt"
 
 func main() {
     converter, _ := yt2mp3.Init()
-    _, _ := converter.Vid2mp3("5blm22DeeHY")
+    fname, _ := converter.Vid2mp3("5blm22DeeHY")
     // The mp3 of http://www.youtube.com/watch?v=5blm22DeeHY will be downloaded
+    fmt.Println(fnam)
 }
 ```
 
