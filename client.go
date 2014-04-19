@@ -52,6 +52,10 @@ func (client DownloadClient) executeCommand() (output string) {
 func (client DownloadClient) extraceFileName(output string) (fname string) {
 	exp := regexp.MustCompile(`\[ffmpeg\] Destination: (.+\.mp3)\n`)
 	matches := exp.FindStringSubmatch(output)
+	if len(matches) < 2 {
+		// TODO: error
+		return
+	}
 	fname = matches[1]
 	return
 }

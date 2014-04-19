@@ -9,14 +9,14 @@ func TestUrl2Vid(t *testing.T) {
 		Context("with valid `www.youtube.com` URL", func() {
 			It("should give vid from query `?v=xxxxxxxxxxx`", func() {
 
-				url := "http://www.youtube.com/watch?v=NCdDvXg6olE"
+				url := "https://www.youtube.com/watch?v=NCdDvXg6olE"
 				vid, err := factory.Url2vid(url)
 				Expect(vid).To(Equal, "NCdDvXg6olE")
 				Expect(err).To(NotExist)
 
-				url = "https://www.youtube.com/watch?v=NCdDvXg6olE"
+				url = "http://www.youtube.com/watch?v=fNDrLfEfRiE"
 				vid, err = factory.Url2vid(url)
-				Expect(vid).To(Equal, "NCdDvXg6olE")
+				Expect(vid).To(Equal, "fNDrLfEfRiE")
 				Expect(err).To(NotExist)
 
 			})

@@ -7,20 +7,20 @@ import "fmt"
 var (
 	url_youtube_com = "www.youtube.com"
 	url_youtu_be    = "youtu.be"
-    pattern_url     = fmt.Sprintf(
-        `^(?P<protocol>https?)://(?P<domain>%s|%s)/(?P<query>.+)`,
-        url_youtube_com,
-        url_youtu_be,
-    )
-    pattern_vid                = `[a-zA-Z0-9_-]{11}`
-    pattern_vid_on_youtube_com = fmt.Sprintf(
-        `^watch?.*v=(?P<vid>%s).*`,
-        pattern_vid,
-    )
-    pattern_vid_on_youtu_be    = fmt.Sprintf(
-        `^(?P<vid>%s).*`,
-        pattern_vid,
-    )
+	pattern_url     = fmt.Sprintf(
+		`^(?P<protocol>https?)://(?P<domain>%s|%s)/(?P<query>.+)`,
+		url_youtube_com,
+		url_youtu_be,
+	)
+	pattern_vid                = `[a-zA-Z0-9_-]{11}`
+	pattern_vid_on_youtube_com = fmt.Sprintf(
+		`^watch?.*v=(?P<vid>%s).*`,
+		pattern_vid,
+	)
+	pattern_vid_on_youtu_be = fmt.Sprintf(
+		`^(?P<vid>%s).*`,
+		pattern_vid,
+	)
 	e_url_too_short = "Too short URL format."
 )
 
