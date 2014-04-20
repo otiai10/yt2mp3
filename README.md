@@ -68,3 +68,9 @@ go get github.com/r7kamura/gospel
 ```sh
 go test ./tests/...
 ```
+
+# in Japan
+
+> 2009年の著作権法改正（2010年1月1日施行）により、違法アップロードされていると知りながら個人的に使用する目的で音楽や映像をダウンロードする行為（デジタル方式による録音・録画）は違法です
+
+http://www.stopillegaldownload.jp/about.html
