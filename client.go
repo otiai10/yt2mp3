@@ -15,6 +15,8 @@ var (
 // Client to handle `youtube-dl` command
 // @see https://github.com/rg3/youtube-dl/blob/master/README.md
 // @example ./youtube-dl {YouTubeURL} [-x|--extract-audio] [--audio-format mp3]
+// @example ./youtube-dl/youtube-dl -x http://www.youtube.com/watch?v=-Xo7qAs1sjM --audio-format mp3 -o './downloads/%(id)s/%(title)s.%(ext)s'
+
 type Client interface {
 	Execute(vid string) (fpath string, err error)
 }
@@ -38,7 +40,15 @@ func NewDownloadClient() DownloadClient {
 
 func (client DownloadClient) Execute(vid string) (fname string, err error) {
 	url := fmt.Sprintf(default_url_prefix, vid)
-	client.command = exec.Command(client.CommandBase, url, "-x", "--audio-format", "mp3")
+	client.command = exec.Command(
+		client.CommandBase,
+		url,
+		"-x",
+		"--audio-format",
+		"mp3",
+		"-o",
+		"downloads/%(id)s/%(title)s.%(ext)s",
+	)
 	output := client.executeCommand()
 	fname = client.extraceFileName(output)
 	return
