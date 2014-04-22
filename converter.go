@@ -20,9 +20,9 @@ func NewError(message string) error {
 
 func Init(args ...interface{}) (converter *Converter, err error) {
 	if len(args) > 0 {
-		if _, ok := interface{}(args[0]).(DownloadClient); ok {
+		if dummyClient, ok := args[0].(*DownloadClient); ok {
 			converter = &Converter{
-				args[0].(DownloadClient),
+				dummyClient,
 			}
 		} else {
 			err = NewError(
@@ -43,7 +43,10 @@ func Init(args ...interface{}) (converter *Converter, err error) {
 func CheckEnv() (err error) {
 	return err
 }
-
+func (c Converter) SetOpt(key string, value interface{}) (ok bool, err error) {
+	ok, err = c.Client.SetOpt(key, value)
+	return
+}
 func (c Converter) Vid2mp3(vid string) (fpath string, err error) {
 	// TODO: Invalid Vid Format Error (for example)
 	fpath, err = c.Client.Execute(vid)

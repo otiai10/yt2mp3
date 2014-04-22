@@ -8,10 +8,10 @@ import "runtime"
 
 var (
 	// TODO : optionalize
-	command_path           string = "/youtube-dl/youtube-dl"
-	default_url_prefix     string = "http://www.youtube.com/watch?v=%s"
-	default_output_fformat string = "downloads/%(id)s/"
-	default_output_fname   string = "%(title)s.%(ext)s"
+	command_path         string = "/youtube-dl/youtube-dl"
+	default_url_prefix   string = "http://www.youtube.com/watch?v=%s"
+	default_output_dir   string = "downloads/{id}/"
+	default_output_fname string = "{title}.{ext}"
 )
 
 // Client to handle `youtube-dl` command
@@ -21,6 +21,7 @@ var (
 
 type Client interface {
 	Execute(vid string) (fpath string, err error)
+	SetOpt(key string, value interface{}) (ok bool, err error)
 }
 type DownloadClient struct {
 	CommandBase string
@@ -28,14 +29,17 @@ type DownloadClient struct {
 	command     *exec.Cmd
 }
 type DownloadOptions struct {
+	OutputDir string
 }
 
-func NewDownloadClient() DownloadClient {
+func NewDownloadClient() *DownloadClient {
 	_, file, _, _ := runtime.Caller(0)
 	commandBase := path.Dir(file) + command_path
-	return DownloadClient{
+	return &DownloadClient{
 		commandBase,
-		DownloadOptions{},
+		DownloadOptions{
+			OutputDir: default_output_dir,
+		},
 		nil,
 	}
 }
@@ -49,13 +53,32 @@ func (client DownloadClient) Execute(vid string) (fname string, err error) {
 		"--audio-format",
 		"mp3",
 		"-o",
-		default_output_fformat+default_output_fname,
+		client.getDestinationFullPath(),
 	)
 	output := client.executeCommand()
 	fname = client.extraceFileName(output)
 	return
 }
-
+func (client *DownloadClient) SetOpt(key string, value interface{}) (ok bool, err error) {
+	if key == "outputdir" {
+		dirname, _ok := value.(string)
+		ok = _ok
+		client.Options.OutputDir = dirname
+	}
+	return
+}
+func (client DownloadClient) getDestinationFullPath() (path string) {
+	return client.compilePath(client.Options.OutputDir + default_output_fname)
+}
+func (client DownloadClient) compilePath(rawFilePath string) (path string) {
+	exp := regexp.MustCompile("\\{id\\}")
+	path = exp.ReplaceAllString(rawFilePath, "%(id)s")
+	exp = regexp.MustCompile("\\{title\\}")
+	path = exp.ReplaceAllString(path, "%(title)s")
+	exp = regexp.MustCompile("\\{ext\\}")
+	path = exp.ReplaceAllString(path, "%(ext)s")
+	return
+}
 func (client DownloadClient) executeCommand() (output string) {
 	output_b, _ := client.command.Output()
 	output = string(output_b)
