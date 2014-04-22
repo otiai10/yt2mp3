@@ -8,8 +8,10 @@ import "runtime"
 
 var (
 	// TODO : optionalize
-	command_path       string = "/youtube-dl/youtube-dl"
-	default_url_prefix string = "http://www.youtube.com/watch?v=%s"
+	command_path           string = "/youtube-dl/youtube-dl"
+	default_url_prefix     string = "http://www.youtube.com/watch?v=%s"
+	default_output_fformat string = "downloads/%(id)s/"
+	default_output_fname   string = "%(title)s.%(ext)s"
 )
 
 // Client to handle `youtube-dl` command
@@ -47,7 +49,7 @@ func (client DownloadClient) Execute(vid string) (fname string, err error) {
 		"--audio-format",
 		"mp3",
 		"-o",
-		"downloads/%(id)s/%(title)s.%(ext)s",
+		default_output_fformat+default_output_fname,
 	)
 	output := client.executeCommand()
 	fname = client.extraceFileName(output)
