@@ -1,4 +1,4 @@
-# yt2mp3
+# yt2mp3 [![Build Status](https://travis-ci.org/otiai10/yt2mp3.svg?branch=master)](https://travis-ci.org/otiai10/yt2mp3)
 A go package extracting mp3 file from YouTube URL.
 
 # Usage
