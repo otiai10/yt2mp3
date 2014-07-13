@@ -4,8 +4,7 @@ go:
     - tip
 
 before_install:
-    # - sudo apt-get install ffmpeg
-    - sudo apt-get install avconv
+    - sudo apt-get install ffmpeg
 before_script:
     - go get github.com/otiai10/mint
 script:
