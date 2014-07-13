@@ -1,0 +1,11 @@
+language: go
+
+go:
+    - tip
+
+before_install:
+    - sudo apt-get install ffmpeg
+before_script:
+    - go get github.com/otiai10/mint
+script:
+    - go test -v all_test.go
