@@ -4,9 +4,8 @@ go:
     - tip
 
 before_install:
-    # - sudo apt-get install ffmpeg
+    - sudo apt-get install ffmpeg
 before_script:
-    - "sudo apt-get install libcairo2-dev libpixman-1-dev libpango1.0-dev libgif-dev libjpeg-dev libgtk2.0-dev vlc libvlc-dev portaudio19-dev libsqlite3-dev libcurl4-openssl-dev makeself curl"
     - go get github.com/otiai10/mint
 script:
     - go test -v all_test.go
